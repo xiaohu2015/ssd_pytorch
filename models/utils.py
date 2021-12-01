@@ -1,6 +1,6 @@
 import math
 from collections import OrderedDict
-from typing import List, Tuple
+from typing import List, Tuple, Optional
 
 import torch
 from torch import Tensor, nn
@@ -32,3 +32,26 @@ def retrieve_out_channels(model: nn.Module, size: Tuple[int, int]) -> List[int]:
         model.train()
 
     return out_channels
+
+
+def _validate_trainable_layers(
+    pretrained: bool,
+    trainable_backbone_layers: Optional[int],
+    max_value: int,
+    default_value: int,
+) -> int:
+    # don't freeze any layers if pretrained model or backbone is not used
+    if not pretrained:
+        if trainable_backbone_layers is not None:
+            warnings.warn(
+                "Changing trainable_backbone_layers has not effect if "
+                "neither pretrained nor pretrained_backbone have been set to True, "
+                f"falling back to trainable_backbone_layers={max_value} so that all layers are trainable"
+            )
+        trainable_backbone_layers = max_value
+
+    # by default freeze first blocks
+    if trainable_backbone_layers is None:
+        trainable_backbone_layers = default_value
+    assert 0 <= trainable_backbone_layers <= max_value
+    return trainable_backbone_layers
