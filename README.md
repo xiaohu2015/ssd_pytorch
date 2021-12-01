@@ -1,6 +1,6 @@
 # SSD_PyTorch
 
-This is the clean implementation of [SSD](https://arxiv.org/abs/1512.02325) from [torchvision](https://github.com/pytorch/vision).
+This is a clean implementation of [SSD](https://arxiv.org/abs/1512.02325) from [torchvision](https://github.com/pytorch/vision).
 
 To execute the example commands below you must install the following:
 
