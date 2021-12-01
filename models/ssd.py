@@ -11,9 +11,9 @@ from . import boxes as box_ops
 from . import vgg
 from . import utils as det_utils
 from .anchor_utils import DefaultBoxGenerator
-from .utils import _validate_trainable_layers
 from .transform import GeneralizedRCNNTransform
 from .box_coder import BoxCoder
+from .matcher import Matcher, SSDMatcher
 
 __all__ = ["SSD", "ssd300_vgg16"]
 
@@ -155,7 +155,7 @@ class SSD(nn.Module):
 
     __annotations__ = {
         "box_coder": BoxCoder,
-        "proposal_matcher": det_utils.Matcher,
+        "proposal_matcher": Matcher,
     }
 
     def __init__(
@@ -195,7 +195,7 @@ class SSD(nn.Module):
             head = SSDHead(out_channels, num_anchors, num_classes)
         self.head = head
 
-        self.proposal_matcher = det_utils.SSDMatcher(iou_thresh)
+        self.proposal_matcher = SSDMatcher(iou_thresh)
 
         if image_mean is None:
             image_mean = [0.485, 0.456, 0.406]
@@ -575,7 +575,7 @@ def ssd300_vgg16(
     if "size" in kwargs:
         warnings.warn("The size of the model is already fixed; ignoring the argument.")
 
-    trainable_backbone_layers = _validate_trainable_layers(
+    trainable_backbone_layers = det_utils._validate_trainable_layers(
         pretrained or pretrained_backbone, trainable_backbone_layers, 5, 4
     )
 
