@@ -20,8 +20,7 @@ import presets
 import torch
 import torch.utils.data
 import torchvision
-import torchvision.models.detection
-import torchvision.models.detection.mask_rcnn
+import models
 import utils
 from coco_utils import get_coco, get_coco_kp
 from engine import train_one_epoch, evaluate
