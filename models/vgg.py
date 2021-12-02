@@ -3,7 +3,7 @@ from typing import Union, List, Dict, Any, cast
 import torch
 import torch.nn as nn
 
-from .torch_utils import load_state_dict_from_url, import _log_api_usage_once
+from .torch_utils import load_state_dict_from_url, _log_api_usage_once
 
 
 __all__ = [
