@@ -65,3 +65,6 @@ IoU metric: bbox
  Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.344
  Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.643
 ```
+
+### Inference 
+See [inference_demo](https://github.com/xiaohu2015/ssd_pytorch/blob/main/inference_demo.ipynb).
