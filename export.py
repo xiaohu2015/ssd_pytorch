@@ -8,7 +8,6 @@ import sys
 import torch
 import torchvision
 import torch.nn.functional as F
-from torchvision.models.detection.image_list import ImageList
 import onnx_graphsurgeon as gs
 import onnx
 import numpy as np
@@ -17,7 +16,10 @@ import pycuda.driver as cuda
 import pycuda.autoinit
 from PIL import Image
 from torchvision.transforms import functional as F
+
 from visualize_utils import draw_bounding_boxes
+from models.transform import ImageList
+import models
 
 assert trt.__version__ >= "8.0"
 
@@ -251,7 +253,7 @@ if __name__ == "__main__":
     if not os.path.exists(args.onnx):
         batch_size = 1
         dummy_input = torch.randn(batch_size, 3, 300, 300, device='cuda')
-        model = torchvision.models.detection.__dict__["ssd300_vgg16"](pretrained=True).cuda()
+        model = models.__dict__["ssd300_vgg16"](pretrained=True).cuda()
         model.forward = types.MethodType(forward, model)
         model.eval()
 
